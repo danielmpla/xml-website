@@ -1,4 +1,4 @@
-var monitoring = angular.module('monitoring', ['uiGmapgoogle-maps']);
+var monitoring = angular.module('monitoring', ['uiGmapgoogle-maps', 'colorpicker.module']);
 
 monitoring.config(function (uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
@@ -16,6 +16,10 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
 
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
+
+    $scope.iconURL = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|';
+    $scope.forbidden = "#ff0303";
+    $scope.notForbidden = "#08B21F";
 
     $scope.map = { center: { latitude: 51.1493459, longitude: 14.9978427 }, zoom: 13 };
     $scope.loggedIn = false;
@@ -51,19 +55,58 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
         }
     };
 
-    $scope.markers = [{
+    $scope.clients = [{
         id: 1,
-        coords: {latitude: 51.1489846, longitude: 14.9977131}
+        name: "Name",
+        mac: "Test MAC",
+        color: "ff0303",
+        edit: false,
+        visible: true,
+        coords: {latitude: 51.1489846, longitude: 14.9977131},
+        zones: [{
+            name: "test",
+            center: {latitude: 51.1489846, longitude: 14.9977137},
+            radius: 100,
+            editable: false,
+            visible: true,
+            forbidden: "#ff0303"
+        }]
     }];
 
-    $scope.circles = [{
-        center: {latitude: 51.1489846, longitude: 14.9977137},
-        radius: 100,
-        draggable: true,
-        editable: true
-    }];
+    $scope.addButton = function() {
+        var mac = prompt("Geben Sie bitte die MAC-Adresse des neuen Geräts ein!", "00:00:00:00:00");
+        if (mac != null) {
+            $scope.addClient(mac);
+        }
+    };
+
+    $scope.addZone = function(id) {
+        for (var i = 0; i < $scope.clients.length; i++) {
+            if ($scope.clients[i].id == id) {
+                $scope.clients[i].zones.push({'name': "Neue Zone", 'center': $scope.clients[i].coords, 'radius': 100, 'editable': false, 'visible': true, 'forbidden': "#ff0303"})
+            }
+        }
+    };
+
+    $scope.addClient = function(mac) {
+        var newId = $scope.clients[$scope.clients.length - 1].id + 1;
+        $scope.clients.push({'id': newId, 'name': "neuer Client", 'mac': mac, 'color': "ff0303", 'edit': false, 'visible': false, 'coords': {'latitude': 1.0, 'longitude': 1.0}, 'zones': [] });
+    };
 
     uiGmapGoogleMapApi.then(function(maps) {
 
     });
+
+    $scope.collapse = function (c) {
+        $("#" + c).collapse('toggle');
+        if ($("#" + c +  "-icon").hasClass("glyphicon-triangle-top")) {
+            $("#" + c +  "-icon").removeClass("glyphicon-triangle-top");
+            $("#" + c +  "-icon").addClass("glyphicon-triangle-bottom");
+        } else {
+            $("#" + c +  "-icon").addClass("glyphicon-triangle-top");
+            $("#" + c +  "-icon").removeClass("glyphicon-triangle-bottom");
+        }
+
+        return false;
+    }
 });

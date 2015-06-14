@@ -48,3 +48,49 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.client-box{
+    border: groove;
+    height: 70px;
+    width: 93%;
+    margin: 3%
+}
+
+.top-box {
+    border: solid thin grey;
+    height: 70px;
+    width: 93%;
+    margin: 3%;
+    padding: 0 0 0 5%;
+}
+
+.bottom-box {
+    margin: -3% 3% 3% 3%;
+    padding: 5% 5% 0;
+    width: 93%;
+    border: solid thin lightgray;
+}
+
+.gear {
+    float: right;
+    height: 10%;
+}
+
+.triangle {
+    float: right;
+    height: 10%;
+    margin-top: -3%;
+}
+
+.tob-box-name {
+    padding: 8% 0;
+    height: 80%;
+    width: 50%;
+    float: left;
+}
+
+.top-box-color {
+    float: right;
+    padding: 8% 5% 8% 0;
+    height: 80%;
+}
