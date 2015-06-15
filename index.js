@@ -62,6 +62,7 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
         color: "ff0303",
         edit: false,
         visible: true,
+        new: false,
         coords: {latitude: 51.1489846, longitude: 14.9977131},
         zones: [{
             name: "test",
@@ -73,6 +74,14 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
         }]
     }];
 
+    $scope.path = {
+        visible: false,
+        path: [
+        {latitude: 51.1489846, longitude: 14.9977131},
+        {latitude: 51.2, longitude: 14.9977131},
+        {latitude: 51.1489846, longitude: 15.0}
+    ]};
+
     $scope.addButton = function() {
         var mac = prompt("Geben Sie bitte die MAC-Adresse des neuen Geräts ein!", "00:00:00:00:00");
         if (mac != null) {
@@ -83,14 +92,14 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
     $scope.addZone = function(id) {
         for (var i = 0; i < $scope.clients.length; i++) {
             if ($scope.clients[i].id == id) {
-                $scope.clients[i].zones.push({'name': "Neue Zone", 'center': $scope.clients[i].coords, 'radius': 100, 'editable': false, 'visible': true, 'forbidden': "#ff0303"})
+                $scope.clients[i].zones.push({'name': "Neue Zone", 'center': $scope.clients[i].coords, 'radius': 100, 'editable': true, 'visible': true, 'forbidden': "#ff0303"})
             }
         }
     };
 
     $scope.addClient = function(mac) {
         var newId = $scope.clients[$scope.clients.length - 1].id + 1;
-        $scope.clients.push({'id': newId, 'name': "neuer Client", 'mac': mac, 'color': "ff0303", 'edit': false, 'visible': false, 'coords': {'latitude': 1.0, 'longitude': 1.0}, 'zones': [] });
+        $scope.clients.push({'id': newId, 'name': "neuer Client", 'mac': mac, 'color': "ff0303", 'edit': true, 'visible': false, 'new': true, 'coords': {'latitude': 1.0, 'longitude': 1.0}, 'zones': [] });
     };
 
     uiGmapGoogleMapApi.then(function(maps) {
