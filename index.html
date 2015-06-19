@@ -7,6 +7,7 @@
     <script src='md5.min.js'></script>
     <script src='jquery-1.11.3.min.js'></script>
     <script src='colorpicker.js'></script>
+    <script type="text/javascript" src="services.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <link rel="stylesheet" href="index.css"/>
     <link rel="stylesheet" href="colorpicker.min.css"/>
@@ -35,7 +36,7 @@
     <div id="nav" style="width: 20%; height: 95%; float: left">
         <div ng-repeat="client in clients">
             <div class="top-box">
-                <div class="gear"><span ng-hide="path.visible" ng-click="path.visible = true" class="glyphicon glyphicon-screenshot"></span><span ng-show="path.visible" ng-click="path.visible = false" class="glyphicon glyphicon-remove"></span><span ng-attr-title="{{client.mac}}" class="glyphicon glyphicon-info-sign"></span><span ng-hide="client.edit" class="glyphicon glyphicon-pencil" ng-click="client.edit = true"></span><span ng-show="client.edit" class="glyphicon glyphicon-ok" ng-click="client.edit = false"></span></div><div style="clear: both"></div>
+                <div class="gear"><span ng-hide="path.visible" ng-click="path.visible = true" class="glyphicon glyphicon-screenshot"></span><span ng-show="path.visible" ng-click="path.visible = false" class="glyphicon glyphicon-remove"></span><span ng-attr-title="{{client.mac}}" class="glyphicon glyphicon-info-sign"></span><span ng-hide="client.edit" class="glyphicon glyphicon-pencil" ng-click="client.edit = true"></span><span ng-show="client.edit" class="glyphicon glyphicon-ok" ng-click="saveClient(client)"></span></div><div style="clear: both"></div>
                 <div class="tob-box-name" ng-hide="client.edit">{{client.name}}</div><div class="tob-box-name" ng-show="client.edit"><input style="width: 100%" type="text" ng-model="client.name"></div><div class="top-box-color"><img ng-hide="client.edit" ng-src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|{{client.color}}"/><button colorpicker type="button" colorpicker-position="bottom" ng-model="client.color" ng-show="client.edit"><img ng-src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|{{client.color}}"/></button></div><div style="clear: both"></div>
                 <div class="triangle"><a href="#" style="color: black" ng-click="collapse(client.id)" aria-controls="collapseExample" data-toggle="collapse"><span ng-attr-id="{{client.id}}-icon" class="glyphicon glyphicon-triangle-bottom"></span></a></div><div style="clear: both;"></div>
             </div>

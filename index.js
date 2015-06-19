@@ -1,15 +1,17 @@
-var monitoring = angular.module('monitoring', ['uiGmapgoogle-maps', 'colorpicker.module']);
+var monitoring = angular.module('monitoring', ['uiGmapgoogle-maps', 'colorpicker.module', 'xmlmonitServices']);
 
-monitoring.config(function (uiGmapGoogleMapApiProvider) {
+monitoring.config(function (uiGmapGoogleMapApiProvider, $httpProvider) {
         uiGmapGoogleMapApiProvider.configure({
             //    key: 'your api key',
             v: '3.17',
             libraries: 'geometry,visualization'
         });
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 );
 
-monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
+monitoring.controller("controller", ['$scope', 'uiGmapGoogleMapApi', 'userService', 'positionService', function($scope, uiGmapGoogleMapApi, userService, positionService) {
     // Do stuff with your $scope.
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
@@ -41,15 +43,27 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
     };
 
     $scope.doLogin = function() {
-        $scope.loggedIn = true;
         $scope.login.password = md5($scope.login.password);
+
+        userService.login($scope.login.username, $scope.login.password).success(function (data) {
+            $scope.loggedIn = true;
+        }).error(function (data) {
+            alert("Bitte überprüfen Sie Benutzername und Passwort!")
+        });
+
     };
 
     $scope.doRegister = function() {
         if ($scope.registerData.password === $scope.registerData.password2) {
             $scope.login.password = md5($scope.registerData.password);
             $scope.login.username = $scope.registerData.username;
-            $scope.loggedIn = true;
+
+            userService.registerUser($scope.login.username, $scope.login.password).success(function (data) {
+                $scope.loggedIn = true;
+            }).error(function (data) {
+                alert("Leider ist etwas schief gelaufen, bitte versuchen Sie es später erneut!")
+            });
+
         } else {
             alert("Die beiden Passwörter stimmen nicht überein!");
         }
@@ -73,6 +87,38 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
             forbidden: "#ff0303"
         }]
     }];
+
+    $scope.saveClient = function (client) {
+        if (client.new) {
+            positionService.createDevice($scope.login.username, $scope.login.password, client.mac, client.name, client.color).success(
+                function (data) {
+                    client.edit = false;
+                }
+            ).error(
+                function (data) {
+                    positionService.updateDevice($scope.login.username, $scope.login.password, client.mac, client.name, client.color).success(
+                        function (data) {
+                            client.edit = false;
+                        }
+                    ).error(
+                        function (data) {
+                            alert("Das Speichern des Clients ist fehlgeschlagen, bitte versuchen Sie später erneut!");
+                        }
+                    );
+                }
+            );
+        } else {
+            positionService.updateDevice($scope.login.username, $scope.login.password, client.mac, client.name, client.color).success(
+                function (data) {
+                    client.edit = false;
+                }
+            ).error(
+                function (data) {
+                    alert("Das Editieren des Clients ist fehlgeschlagen, bitte versuchen Sie später erneut!");
+                }
+            );
+        }
+    };
 
     $scope.path = {
         visible: false,
@@ -118,4 +164,4 @@ monitoring.controller("controller", function($scope, uiGmapGoogleMapApi) {
 
         return false;
     }
-});
+}]);

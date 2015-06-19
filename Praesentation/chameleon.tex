@@ -1,0 +1,83 @@
+\documentclass{beamer}
+
+\usepackage{multimedia}
+\usepackage[normal,tabtopcap,figbotcap]{subfigure}
+\usepackage{cite}
+
+\usetheme[pageofpages=von,% String used between the current page and the
+                         % total page count.
+          bullet=circle,% Use circles instead of squares for bullets.
+          titleline=true,% Show a line below the frame title.
+          alternativetitlepage=true,% Use the fancy title page.
+          titlepagelogo=hszg,% Logo for the first page.
+          %watermark=watermark-polito,% Watermark used in every page.
+          %watermarkheight=100px,% Height of the watermark.
+          %watermarkheightmult=4,% The watermark image is 4 times bigger
+                                % than watermarkheight.
+          ]{Torino}
+
+\usepackage[ngerman]{babel}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+
+\newcommand{\beginbackup}{
+   \newcounter{framenumbervorappendix}
+   \setcounter{framenumbervorappendix}{\value{framenumber}}
+}
+%neuer Befehl für beginn von Seiten die nach kompletter Anzahl kommen sollen
+\newcommand{\backupend}{
+   \addtocounter{framenumbervorappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumbervorappendix}} 
+}
+%neuer Befehl für ende von Seiten die nach kompletter Anzahl kommen sollen
+\author{Daniel Müssig}
+\title{TITEL}
+\institute{Hochschule Zittau/Görlitz}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}[t,plain]
+\titlepage
+\end{frame}
+
+\section*{Inhalt}
+
+\setcounter{framenumber}{0}
+
+\begin{frame}
+\frametitle{Inhalt}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\end{frame}
+
+\beginbackup
+
+\section*{Fragen?}
+
+\begin{frame}
+\begin{center}
+\Huge{Fragen?}
+\end{center}
+\end{frame}
+
+%\section{Literaturverzeichnis}
+
+%\begin{frame}[plain, allowframebreaks]
+%\frametitle{Literaturverzeichnis}
+%\footnotesize
+%\nocite{*}
+%\beamertemplatetextbibitems
+%\def\newblock{}
+%\bibliographystyle{abbrvdin}
+%\bibliography{literature}
+%\end{frame}
+
+\backupend
+
+\end{document}
+
