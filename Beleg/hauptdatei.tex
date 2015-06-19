@@ -1,0 +1,119 @@
+\documentclass[
+    11pt,               % KOMA default
+    a4paper,            % DIN A4
+    %twoside,            % Zweiseitig
+%     onside,
+    headsepline,        % Linie unter der Kopfzeile
+    foodsepline,        % Linie �ber Fussnote
+    %automark,           % Kolumnentitel lebendig
+    %pointlessnumbers,   % Keinen Punkt hinter die letzte Zahl
+                        % eines Kapitels (auch bei Anhang)
+%     openleft,           %
+    %openright,
+    cleardoubleplain,   %
+    %abstracton,         %
+    %idxtotoc,           % Index soll im Inhaltsverzeichnis auftauchen
+    liststotoc,         %
+    bibtotoc,           %
+    %parskip            % parskip-, parskip*, parskip+
+]%{scrreprt}
+{article}
+
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{tabu}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Definitions
+\definecolor{mydarkblue}{rgb}{0.0,0.0,0.5}
+\definecolor{mylightblue}{rgb}{0.85,0.85,0.85}
+\definecolor{mylightgray}{rgb}{0.95,0.95,0.95}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.4mm}}
+
+\clubpenalty=10000
+\widowpenalty=10000
+
+\begin{document}
+
+%\newpage
+\pagestyle{empty}
+\include{deckblatt}
+\include{abstract}
+\pdfbookmark{\contentsname}{toc}\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\pagestyle{empty}
+\listoffigures
+
+\newpage
+\listoftables
+
+\newpage
+\pagestyle{plain}
+\setcounter{section}{0}
+\pagenumbering{arabic}
+
+%\include{einleitung}
+
+%======================================================================
+%   Literaturverzeichnis
+%======================================================================
+\renewcommand{\baselinestretch}{1.13}\normalsize
+\markboth{BIBLIOGRAPHY}{BIBLIOGRAPHY}
+\renewcommand{\bibname}{BIBLIOGRAPHY}
+\bibliographystyle{plaindin}
+\selectlanguage{ngerman}
+\bibliography{literatur}
+\cleardoublepage
+
+%======================================================================
+%   Selbstständigkeitserklärung
+%======================================================================
+\selectlanguage{ngerman}
+\section*{Selbstständigkeitserklärung}
+\thispagestyle{empty} Hiermit erklären wir, dass wir die vorliegende
+Arbeit selbstständig angefertigt, nicht anderweitig zu
+Prüfungszwecken vorgelegt und keine anderen als die angegebenen
+Hilfsmittel verwendet haben. Sämtliche wissentlich verwendete
+Textausschnitte, Zitate oder Inhalte anderer Verfasser
+wurden ausdrücklich als solche gekennzeichnet.%\\[2ex]
+
+\vspace{2cm}\noindent
+%--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+\vspace{1cm}\noindent
+--------------------------------- \newline
+Görlitz, den 01. Dezember 2014
+
+\end{document}
