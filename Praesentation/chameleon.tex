@@ -105,12 +105,13 @@
 \begin{frame}
 \frametitle{Systemanforderungen}
 \begin{itemize}
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
+\item Erfassen neuer Geräte und Nutzer
+\item Rechteverwaltung zum Schutz der Daten
+\item GeoFence Zonen Verwaltung
+\item Zeitnahe Anzeige von neuen Positionen
+\item Warnung beim Betreten/Verlassen von gesperrten Gebieten
+\item Schnittstelle zur Datenerfassung
+\item Management der Positionsdaten
 \end{itemize}
 \end{frame}
 
@@ -132,6 +133,19 @@
 \section{Verwendete Technologien}
 \begin{frame}
 \frametitle{Verwendete Technologien}
+\begin{itemize}
+\item WebApp
+	\begin{itemize}
+	\item AngularJS
+	\item Google Maps API
+	\end{itemize}
+\item eXist
+	\begin{itemize}
+	\item REST Schnittstelle u.A. mit Stored Queries
+	\item Scheduler zum Aufräumen der DB
+	\item URL Rewriting
+	\end{itemize}
+\end{itemize}
 \end{frame}
 
 
@@ -145,6 +159,15 @@
 \section{Fazit}
 \begin{frame}
 \frametitle{Fazit}
+\begin{itemize}
+\item Grundfunktionalität implementiert
+\item Wichtigster nächster Implementierungsschritt: Sicherheit
+	\begin{itemize}
+	\item Verschlüsselte Übertragung
+	\item %was könnte man noch machen?
+	\end{itemize}
+\item Performanceprobleme mit Google Maps
+\end{itemize}
 \end{frame}
 
 \beginbackup
