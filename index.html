@@ -26,7 +26,7 @@
     <nav class="navbar navbar-default" style="margin-bottom: 5px">
         <div class="container-fluid">
             <span class="navbar-brand">Monitoring</span>
-            <p class="navbar-text navbar-right" style="margin-right: 0 !important;">Eingeloggt als {{login.username}}</p>
+            <p class="navbar-text navbar-right" style="margin-right: 0 !important;">Eingeloggt als {{login.username}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" ng-click="logout()">Logut</a> </p>
         </div>
     </nav>
     <!--<div id="buttons" style="height: 5%; padding: 10px">
@@ -36,7 +36,7 @@
     <div id="nav" style="width: 20%; height: 95%; float: left">
         <div ng-repeat="client in clients">
             <div class="top-box">
-                <div class="gear"><span ng-hide="path.visible" ng-click="path.visible = true" class="glyphicon glyphicon-screenshot"></span><span ng-show="path.visible" ng-click="path.visible = false" class="glyphicon glyphicon-remove"></span><span ng-attr-title="{{client.mac}}" class="glyphicon glyphicon-info-sign"></span><span ng-hide="client.edit" class="glyphicon glyphicon-pencil" ng-click="client.edit = true"></span><span ng-show="client.edit" class="glyphicon glyphicon-ok" ng-click="saveClient(client)"></span></div><div style="clear: both"></div>
+                <div class="gear"><span ng-hide="path.visible" ng-click="showPath(client)" class="glyphicon glyphicon-screenshot"></span><span ng-show="path.visible" ng-click="hidePath()" class="glyphicon glyphicon-remove"></span><span ng-attr-title="{{client.mac}}" class="glyphicon glyphicon-info-sign"></span><span ng-hide="client.edit" class="glyphicon glyphicon-pencil" ng-click="client.edit = true"></span><span ng-show="client.edit" class="glyphicon glyphicon-ok" ng-click="saveClient(client)"></span><span ng-hide="client.edit" ng-click="deleteClient(client)" class="glyphicon glyphicon-remove" style="color: red"></span></div><div style="clear: both"></div>
                 <div class="tob-box-name" ng-hide="client.edit">{{client.name}}</div><div class="tob-box-name" ng-show="client.edit"><input style="width: 100%" type="text" ng-model="client.name"></div><div class="top-box-color"><img ng-hide="client.edit" ng-src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|{{client.color}}"/><button colorpicker type="button" colorpicker-position="bottom" ng-model="client.color" ng-show="client.edit"><img ng-src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|{{client.color}}"/></button></div><div style="clear: both"></div>
                 <div class="triangle"><a href="#" style="color: black" ng-click="collapse(client.id)" aria-controls="collapseExample" data-toggle="collapse"><span ng-attr-id="{{client.id}}-icon" class="glyphicon glyphicon-triangle-bottom"></span></a></div><div style="clear: both;"></div>
             </div>
@@ -44,7 +44,7 @@
                 <div ng-repeat="zone in client.zones">
                     <div ng-hide="zone.editable" style="padding-bottom: 5%; width: 60%; float: left;">{{zone.name}}</div>
                     <div ng-show="zone.editable" style="padding-bottom: 5%; width: 60%; float: left;"><input style="width: 100%" type="text" ng-model="zone.name"></div>
-                    <div style="float: right"><span ng-if="zone.forbidden == notForbidden" ng-show="zone.editable"ng-click="zone.forbidden = forbidden;" class="glyphicon glyphicon-thumbs-up" style="padding-right: 3px"></span><span ng-if="zone.forbidden == forbidden" ng-show="zone.editable"ng-click="zone.forbidden = notForbidden;" class="glyphicon glyphicon-thumbs-down" style="padding-right: 3px"></span><span ng-show="zone.visible && !zone.editable" ng-hide="zone.editable" ng-click="zone.visible = false;" class="glyphicon glyphicon-eye-close" style="padding-right: 3px"></span><span ng-hide="zone.visible || zone.editable" ng-click="zone.visible = true;" class="glyphicon glyphicon-eye-open" style="padding-right: 3px"></span><span ng-click="zone.editable = true" ng-hide="zone.editable || !zone.visible" class="glyphicon glyphicon-pencil" style="padding-right: 3px"></span><span ng-click="zone.editable = false;" ng-show="zone.editable" class="glyphicon glyphicon-ok" style="padding-right: 3px"></span><span ng-show="zone.editable" ng-click="zone.editable = false;" class="glyphicon glyphicon-remove" style="color: red"></span><span ng-hide="zone.editable" class="glyphicon glyphicon-remove" style="color: red"></span></div>
+                    <div style="float: right"><span ng-if="zone.forbidden == notForbidden" ng-show="zone.editable"ng-click="zone.forbidden = forbidden;" class="glyphicon glyphicon-thumbs-up" style="padding-right: 3px"></span><span ng-if="zone.forbidden == forbidden" ng-show="zone.editable"ng-click="zone.forbidden = notForbidden;" class="glyphicon glyphicon-thumbs-down" style="padding-right: 3px"></span><span ng-show="zone.visible && !zone.editable" ng-click="zone.visible = false;" class="glyphicon glyphicon-eye-close" style="padding-right: 3px"></span><span ng-show="!zone.visible && !zone.editable" ng-click="zone.visible = true;" class="glyphicon glyphicon-eye-open" style="padding-right: 3px"></span><span ng-click="editZoneClick(zone)" ng-hide="zone.editable || !zone.visible" class="glyphicon glyphicon-pencil" style="padding-right: 3px"></span><span ng-click="saveZone(zone, client)" ng-show="zone.editable" class="glyphicon glyphicon-ok" style="padding-right: 3px"></span><span ng-hide="zone.editable" ng-click="deleteZone(zone, client)" class="glyphicon glyphicon-remove" style="color: red"></span></div>
                     <div style="clear: both"></div>
                 </div>
                 <div style="padding-top: 10px; width: 100%; text-align: center"><input type="button" class="btn btn-default" ng-click="addZone(client.id)" value="Zone hinzufügen"></div>
@@ -53,9 +53,9 @@
         <div style="padding-top: 10px; width: 100%; text-align: center"><input type="button" class="btn btn-default" ng-click="addButton()" value="Client hinzufügen"></div>
     </div>
     <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-        <div ng-repeat="client in clients | filter:{new:false, visible: true}">
-            <ui-gmap-polyline path='path.path' visible="path.visible"/>
-            <ui-gmap-marker idKey='client.id' coords='client.coords'  icon="iconURL + client.color"/>
+        <ui-gmap-polyline path='path.path' visible="path.visible"/>
+        <div ng-repeat="client in clients| filter:{visible: true}"><!--  | filter:{new:false, visible: true} -->
+            <ui-gmap-marker ng-if="!client.new" idKey='client.id' coords='client.coords'  icon="iconURL + client.color"/>
             <ui-gmap-circle ng-repeat="zone in client.zones" fill="{'color': zone.forbidden, 'opacity': 0.5}" center='zone.center' radius='zone.radius' draggable='zone.editable' editable='zone.editable' visible="zone.visible" />
         </div>
     </ui-gmap-google-map>
