@@ -122,6 +122,29 @@
 \frametitle{Architekturskizze}
 \end{frame}
 
+\subsection{Collectionstruktur und Datenstruktur}
+\begin{frame}
+\frametitle{Collectionstruktur und Datenstruktur}
+\begin{itemize}
+\item Collectionstruktur:\\
+\noindent\hspace*{10mm}/db/apps/positiontrack\\
+\noindent\hspace*{30mm}/db\\
+\noindent\hspace*{30mm}/webapp\\
+\noindent\hspace*{30mm}/xsd\\
+\noindent\hspace*{30mm}/xq
+\item Datenstruktur:
+\begin{itemize}
+\item userlist.xml für:
+\begin{itemize}
+\item Nutzerdaten (Name, Passwort)
+\item Clientgeräte die für die Nutzer registriert sind
+\item Zonen die für die Gerät registriert sind
+\end{itemize}
+\item XML-Dateien für jedes einzelne Gerät zur Speicherung der Positionsdaten
+\end{itemize}
+\end{itemize}
+\end{frame}
+
 \begin{frame}
 \frametitle{GUI Mock}
 \begin{figure}
@@ -148,7 +171,29 @@
 \end{itemize}
 \end{frame}
 
+\subsection{URL Rewriting}
+\begin{frame}
+\frametitle{URL Rewriting}
+\begin{itemize}
+\item Verbesserung der Lesbarkeit der URL
+\item Schirmt Colletionstruktur vor den Nutzern
+\item Genutztes Pattern: exist/positiontrack
+\end{itemize}
+\end{frame}
 
+\subsection{REST API}
+\begin{frame}
+\frametitle{REST API}
+\begin{itemize}
+\item Nutzung zum Aufrufen der XQueries durch den Webclient
+\item Probleme:
+\begin{itemize}
+\item DELETE und PUT werden von Exist direkt ausgeführt
+\item führt zum löschen bzw. überschreiben der aufgerufenen
+\item Lösung: Verwendung von POST
+\end{itemize}
+\end{itemize}
+\end{frame}
 
 \section{Prototypvorstellung}
 \begin{frame}
